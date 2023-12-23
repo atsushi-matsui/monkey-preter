@@ -2,12 +2,11 @@ package lexer
 
 import "github.com/atsushi-matsui/monkey-preter/monkey/token"
 
-
 type Lexer struct {
-	input string
-	position int // 現在地
-	readPosition int // 次の読み込み位置
-	ch byte // 捜索中の文字
+	input        string
+	position     int  // 現在地
+	readPosition int  // 次の読み込み位置
+	ch           byte // 捜索中の文字
 }
 
 func New(input string) *Lexer {
@@ -31,11 +30,10 @@ func (l *Lexer) readChar() {
 func (l *Lexer) peekChar() byte {
 	if l.readPosition >= len(l.input) {
 		l.ch = 0
-	} 
+	}
 
 	return l.input[l.readPosition]
 }
- 
 
 func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
@@ -47,7 +45,7 @@ func (l *Lexer) NextToken() token.Token {
 		if l.peekChar() == '=' {
 			l.readChar()
 			tok = token.Token{
-				Type: token.EQ,
+				Type:    token.EQ,
 				Literal: "==",
 			}
 		} else {
@@ -57,7 +55,7 @@ func (l *Lexer) NextToken() token.Token {
 		if l.peekChar() == '=' {
 			l.readChar()
 			tok = token.Token{
-				Type: token.NOT_EQ,
+				Type:    token.NOT_EQ,
 				Literal: "!=",
 			}
 		} else {
@@ -91,7 +89,7 @@ func (l *Lexer) NextToken() token.Token {
 		tok.Literal = ""
 		tok.Type = token.EOF
 	default:
-		if isLetter(l.ch) { 
+		if isLetter(l.ch) {
 			ident := l.readIdentifier()
 			tok.Literal = ident
 			tok.Type = token.LookupIdent(ident)
@@ -130,20 +128,19 @@ func (l *Lexer) readNumber() string {
 }
 
 func (l *Lexer) skipWhitespace() {
-	for l.ch == ' ' || l.ch == '\t' || l.ch == '\r' || l.ch == '\n'{
+	for l.ch == ' ' || l.ch == '\t' || l.ch == '\r' || l.ch == '\n' {
 		l.readChar()
 	}
 }
-
 
 func newToken(tokenType token.TokenType, literal byte) token.Token {
 	return token.Token{Type: tokenType, Literal: string(literal)}
 }
 
-func isLetter(ch byte) bool { 
-	return 'a' <= ch && ch <= 'z' || 'A' <= ch &&  ch <= 'Z' || ch == '_'
+func isLetter(ch byte) bool {
+	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_'
 }
 
-func isDigit(ch byte) bool { 
+func isDigit(ch byte) bool {
 	return '0' <= ch && ch <= '9'
 }

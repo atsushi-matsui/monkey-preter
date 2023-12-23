@@ -1,20 +1,18 @@
 package token
 
-
 type TokenType string
 
-
 type Token struct {
-	Type TokenType
+	Type    TokenType
 	Literal string
 }
 
-const(
+const (
 	ILLEGAL = "ILLEGAL"
-	EOF = "EOF"
+	EOF     = "EOF"
 
 	IDENT = "INDENT"
-	INT = "INT"
+	INT   = "INT"
 
 	ASSIGN   = "="
 	PLUS     = "+"
@@ -29,7 +27,7 @@ const(
 	EQ     = "=="
 	NOT_EQ = "!="
 
-	COMMA = ","
+	COMMA     = ","
 	SEMICOLON = ";"
 
 	LPAREN = "("
